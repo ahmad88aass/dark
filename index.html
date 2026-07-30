@@ -27,12 +27,12 @@
   <div class="ticker">
     <span>📞 واتساب: 963984335910+</span>
     <span>✈️ تلغرام: @ahmad88_m</span>
-    <span>⚡ مع الأمريكي احصل على رقمك وخدمتك خلال ثواني</span>
+    <span>⚡️ مع الأمريكي احصل على رقمك وخدمتك خلال ثواني</span>
     <span>💰 دفع آمن عبر شام كاش وبينانس</span>
     <span>✅ خدمة 24/7 - نرد عليك فوراً</span>
     <span>📞 واتساب: 963984335910+</span>
     <span>✈️ تلغرام: @ahmad88_m</span>
-    <span>⚡ مع الأمريكي احصل على رقمك وخدمتك خلال ثواني</span>
+    <span>⚡️ مع الأمريكي احصل على رقمك وخدمتك خلال ثواني</span>
     <span>💰 دفع آمن عبر شام كاش وبينانس</span>
     <span>✅ خدمة 24/7 - نرد عليك فوراً</span>
   </div>
@@ -294,8 +294,7 @@ function openOrder(serviceName, price, fieldLabel) {
   document.getElementById("modal-title").textContent = serviceName;
   document.getElementById("modal-price").textContent = "$" + price;
   document.getElementById("modal-extra-field").innerHTML = 
-    <input id="modal-detail" type="text" placeholder="${fieldLabel}..." 
-    class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition">;
+    <input id="modal-detail" type="text" placeholder="${fieldLabel}..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition">;
   document.getElementById("order-modal").classList.remove("hidden");
   document.getElementById("order-modal").classList.add("flex");
 }
@@ -307,7 +306,8 @@ function closeOrderModal() {
 
 async function sendOrder() {
   const name = document.getElementById("modal-name").value.trim();
-  const detail = document.getElementById("modal-detail").value.trim();
+  const detailInput = document.getElementById("modal-detail");
+  const detail = detailInput ? detailInput.value.trim() : "";
   const payment = document.getElementById("modal-payment").value;if (!name  !detail  !payment) {
     showToast("يرجى تعبئة جميع الحقول", "error");
     return;
@@ -316,13 +316,20 @@ async function sendOrder() {
   const msg = 🛒 طلب جديد من الموقع\n\n👤 الاسم: ${name}\n📦 الخدمة: ${currentOrder.serviceName}\n💰 السعر: $${currentOrder.price}\n📝 التفاصيل: ${detail}\n💳 طريقة الدفع: ${payment}\n\n⏰ ${new Date().toLocaleString("ar-SY")};
 
   try {
-    await fetch(https://api.telegram.org/bot${TG_BOT}/sendMessage, {
+    let res = await fetch(https://api.telegram.org/bot${TG_BOT}/sendMessage, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ chat_id: ADMIN_ID, text: msg, parse_mode: "HTML" })
     });
-    closeOrderModal();
-    showToast("✅ تم إرسال طلبك! سنتواصل معك قريباً", "success");
+    let data = await res.json();
+    if(data.ok) {
+      closeOrderModal();
+      showToast("✅ تم إرسال طلبك! سنتواصل معك قريباً", "success");
+      document.getElementById("modal-name").value = "";
+      document.getElementById("modal-payment").value = "";
+    } else {
+      throw new Error("Telegram error");
+    }
   } catch(e) {
     const waMsg = encodeURIComponent(مرحباً، أريد طلب: ${currentOrder.serviceName} ($${currentOrder.price})\nالاسم: ${name}\nالتفاصيل: ${detail}\nالدفع: ${payment});
     window.open(https://wa.me/${WA_NUM}?text=${waMsg}, "_blank");
@@ -346,4 +353,5 @@ document.getElementById("order-modal").addEventListener("click", function(e) {
   if(e.target === this) closeOrderModal();
 });
 </script>
-</bo
+</body>
+</html>
