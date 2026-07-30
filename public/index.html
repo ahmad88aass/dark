@@ -3,656 +3,433 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>الأمريكي | خدمات الأرقام والاشتراكات</title>
+<title>الأمريكي | خدمات الأرقام</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
-  * { font-family: 'Tajawal', sans-serif; }
-  .card-glow { transition: all 0.3s ease; }
-  .card-glow:hover { transform: translateY(-4px); box-shadow: 0 12px 25px -5px rgba(59,130,246,0.25); }
-  .btn-click:active { transform: scale(0.96); }
-  /* شريط متحرك */
-  .ticker-wrap { width:100%; background:#0f172a; border-bottom:1px solid #1e3a5f; overflow:hidden; padding:10px 0; }
-  .ticker { display:flex; animation: ticker 25s linear infinite; white-space:nowrap; }
-  .ticker span { padding: 0 40px; color:#38bdf8; font-weight:700; font-size:14px; }
-  @keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
-  /* مودال */
-  .modal-bg { backdrop-filter: blur(8px); }
-  .toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); z-index:9999; min-width:280px; text-align:center; border-radius:16px; padding:14px 28px; font-weight:700; font-size:15px; box-shadow:0 8px 32px rgba(0,0,0,0.4); transition: all 0.3s; }
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
+*{font-family:'Tajawal',sans-serif;box-sizing:border-box;}
+body{background:#0f172a;color:white;min-height:100vh;padding-bottom:80px;}
+.ticker-wrap{width:100%;background:#0a0f1e;border-bottom:1px solid #1e3a5f;overflow:hidden;padding:8px 0;}
+.ticker{display:flex;animation:ticker 30s linear infinite;white-space:nowrap;}
+.ticker span{padding:0 40px;color:#38bdf8;font-weight:700;font-size:13px;}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.tab-bar{position:fixed;bottom:0;left:0;right:0;background:#1e293b;border-top:1px solid #334155;display:flex;z-index:50;}
+.tab-item{flex:1;display:flex;flex-direction:column;align-items:center;padding:10px 0;cursor:pointer;color:#64748b;transition:all 0.2s;}
+.tab-item.active{color:#3b82f6;}
+.tab-item i{font-size:20px;margin-bottom:4px;}
+.tab-item span{font-size:11px;font-weight:700;}
+.page{display:none;}
+.page.active{display:block;}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(8px);z-index:100;display:none;align-items:center;justify-content:center;}
+.modal-overlay.show{display:flex;}
+.card{background:#1e293b;border-radius:20px;border:1px solid #334155;transition:all 0.3s;}
+.card:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(59,130,246,0.2);}
+.btn{cursor:pointer;transition:all 0.2s;border:none;outline:none;}
+.btn:active{transform:scale(0.96);}
+.country-card{background:#1e293b;border-radius:16px;border:1px solid #334155;padding:16px;display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);z-index:999;padding:12px 24px;border-radius:12px;font-weight:700;font-size:14px;min-width:250px;text-align:center;display:none;}
+.toast.show{display:block;}
+.balance-card{background:linear-gradient(135deg,#1d4ed8,#7c3aed);border-radius:24px;padding:28px;margin:16px;}
 </style>
 </head>
-<body class="bg-slate-950 text-white min-h-screen antialiased">
+<body>
 
-<!-- شريط التواصل المتحرك -->
+<!-- شريط متحرك -->
 <div class="ticker-wrap">
   <div class="ticker">
     <span>📞 واتساب: 963984335910+</span>
     <span>✈️ تلغرام: @ahmad88_m</span>
-    <span>⚡ مع الأمريكي احصل على رقمك وخدمتك خلال ثواني</span>
-    <span>💰 دفع آمن عبر شام كاش وبينانس</span>
-    <span>✅ خدمة 24/7 - نرد عليك فوراً</span>
+    <span>⚡ مع الأمريكي احصل على رقمك خلال ثواني</span>
+    <span>💰 دفع آمن شام كاش وبينانس</span>
+    <span>✅ خدمة 24/7</span>
     <span>📞 واتساب: 963984335910+</span>
     <span>✈️ تلغرام: @ahmad88_m</span>
-    <span>⚡ مع الأمريكي احصل على رقمك وخدمتك خلال ثواني</span>
-    <span>💰 دفع آمن عبر شام كاش وبينانس</span>
-    <span>✅ خدمة 24/7 - نرد عليك فوراً</span>
+    <span>⚡ مع الأمريكي احصل على رقمك خلال ثواني</span>
+    <span>💰 دفع آمن شام كاش وبينانس</span>
+    <span>✅ خدمة 24/7</span>
   </div>
 </div>
 
 <!-- هيدر -->
-<header class="bg-slate-900/90 backdrop-blur-md sticky top-0 z-50 border-b border-slate-800 py-4 px-6 flex flex-col md:flex-row justify-between items-center shadow-2xl gap-4">
-  <div class="flex items-center gap-4">
-    <div class="bg-gradient-to-tr from-blue-600 to-indigo-600 p-3 rounded-2xl shadow-lg text-white">
-      <i class="fas fa-shield-halved text-2xl"></i>
+<header style="background:#0f172a;border-bottom:1px solid #1e293b;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:40;">
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div style="background:linear-gradient(135deg,#2563eb,#7c3aed);padding:10px;border-radius:14px;">
+      <i class="fas fa-shield-halved" style="font-size:20px;"></i>
     </div>
     <div>
-      <h1 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">⚡️ الأمريكي</h1>
-      <p class="text-xs font-bold text-amber-400">مع الأمريكي احصل على رقمك وخدمتك خلال ثواني 🚀</p>
+      <div style="font-size:20px;font-weight:900;background:linear-gradient(to right,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">⚡ الأمريكي</div>
+      <div style="font-size:11px;color:#fbbf24;font-weight:700;">رقمك وخدمتك خلال ثواني 🚀</div>
     </div>
   </div>
-  <div class="flex gap-3 items-center">
-    <!-- معلومات المستخدم (تظهر بعد تسجيل الدخول) -->
-    <div id="user-info" class="hidden items-center gap-3">
-      <div class="bg-slate-800 px-4 py-2 rounded-xl text-sm">
-        <span class="text-gray-400">مرحباً </span>
-        <span id="header-name" class="text-blue-400 font-bold"></span>
-        <span class="text-gray-500 mx-2">|</span>
-        <span class="text-gray-400">الرصيد: </span>
-        <span id="header-balance" class="text-emerald-400 font-black">$0.00</span>
-      </div>
-      <div class="bg-slate-800 px-3 py-2 rounded-xl text-xs text-gray-400 font-mono">
-        🆔 <span id="header-uid" class="text-amber-400"></span>
-      </div>
-      <button onclick="logout()" class="bg-red-600/20 hover:bg-red-600/40 text-red-400 px-3 py-2 rounded-xl text-xs transition">
-        <i class="fas fa-sign-out-alt"></i> خروج
-      </button>
-    </div>
-    <!-- أزرار تسجيل الدخول (تظهر قبل تسجيل الدخول) -->
-    <div id="auth-buttons" class="flex gap-2">
-      <button onclick="showModal('login')" class="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-xl text-sm font-bold transition btn-click"><i class="fas fa-sign-in-alt"></i> دخول
-      </button>
-      <button onclick="showModal('register')" class="bg-emerald-600 hover:bg-emerald-500 px-4 py-2 rounded-xl text-sm font-bold transition btn-click">
-        <i class="fas fa-user-plus"></i> تسجيل
-      </button>
-    </div>
-    <a href="https://wa.me/963984335910" target="_blank" class="bg-emerald-700 hover:bg-emerald-600 px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-2 transition btn-click">
-      <i class="fab fa-whatsapp text-lg"></i> واتساب
+  <div style="display:flex;gap:8px;">
+    <a href="https://wa.me/963984335910" target="_blank" style="background:#16a34a;padding:8px 14px;border-radius:12px;font-size:13px;font-weight:700;text-decoration:none;color:white;display:flex;align-items:center;gap:6px;"><i class="fab fa-whatsapp"></i> واتساب
     </a>
-    <a href="https://t.me/ahmad88_m" target="_blank" class="bg-blue-700 hover:bg-blue-600 px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-2 transition btn-click">
-      <i class="fab fa-telegram text-lg"></i> تلغرام
+    <a href="https://t.me/ahmad88_m" target="_blank" style="background:#2563eb;padding:8px 14px;border-radius:12px;font-size:13px;font-weight:700;text-decoration:none;color:white;display:flex;align-items:center;gap:6px;">
+      <i class="fab fa-telegram"></i> تلغرام
     </a>
   </div>
 </header>
 
-<!-- مودال تسجيل الدخول / التسجيل -->
-<div id="auth-modal" class="fixed inset-0 z-[100] hidden items-center justify-center modal-bg bg-black/70">
-  <div class="bg-slate-900 border border-slate-700 rounded-3xl p-8 w-full max-w-md mx-4 shadow-2xl">
-    
-    <!-- تسجيل الدخول -->
-    <div id="login-form">
-      <h2 class="text-2xl font-black text-center mb-6 text-blue-400"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</h2>
-      <div class="space-y-4">
-        <input id="login-username" type="text" placeholder="اسم المستخدم" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition">
-        <input id="login-password" type="password" placeholder="كلمة المرور" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition">
-        <p id="login-error" class="text-red-400 text-sm hidden"></p>
-        <button onclick="doLogin()" class="w-full bg-blue-600 hover:bg-blue-500 py-3 rounded-xl font-black text-lg transition btn-click">دخول</button>
-        <p class="text-center text-sm text-gray-400">ما عندك حساب؟ <button onclick="switchForm('register')" class="text-emerald-400 font-bold">سجل الآن</button></p>
-      </div>
-    </div>
-
-    <!-- التسجيل -->
-    <div id="register-form" class="hidden">
-      <h2 class="text-2xl font-black text-center mb-6 text-emerald-400"><i class="fas fa-user-plus"></i> إنشاء حساب جديد</h2>
-      <div class="space-y-4">
-        <input id="reg-fullname" type="text" placeholder="الاسم الكامل" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 transition">
-        <input id="reg-username" type="text" placeholder="اسم المستخدم (إنجليزي بدون مسافات)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 transition">
-        <input id="reg-password" type="password" placeholder="كلمة المرور" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 transition">
-        <p id="reg-error" class="text-red-400 text-sm hidden"></p>
-        <button onclick="doRegister()" class="w-full bg-emerald-600 hover:bg-emerald-500 py-3 rounded-xl font-black text-lg transition btn-click">إنشاء الحساب</button>
-        <p class="text-center text-sm text-gray-400">عندك حساب؟ <button onclick="switchForm('login')" class="text-blue-400 font-bold">سجل دخول</button></p>
-      </div>
-    </div>
-
-    <button onclick="closeModal()" class="absolute top-4 left-4 text-gray-500 hover:text-white text-xl transition"><i class="fas fa-times"></i></button>
-  </div>
-</div>
-
-<!-- مودال الشراء -->
-<div id="buy-modal" class="fixed inset-0 z-[100] hidden items-center justify-center modal-bg bg-black/70">
-  <div class="bg-slate-900 border border-slate-700 rounded-3xl p-8 w-full max-w-md mx-4 shadow-2xl">
-    <h2 id="buy-modal-title" class="text-xl font-black text-center mb-2 text-blue-400"></h2><p id="buy-modal-price" class="text-center text-3xl font-black text-emerald-400 mb-6"></p>
-    <div id="buy-modal-fields" class="space-y-4 mb-6"></div>
-    <p id="buy-error" class="text-red-400 text-sm hidden mb-3"></p>
-    <div class="flex gap-3">
-      <button onclick="closeBuyModal()" class="flex-1 bg-slate-700 hover:bg-slate-600 py-3 rounded-xl font-bold transition">إلغاء</button>
-      <button onclick="confirmBuy()" class="flex-1 bg-blue-600 hover:bg-blue-500 py-3 rounded-xl font-black transition btn-click">تأكيد الطلب</button>
-    </div>
-  </div>
-</div>
-
-<!-- مودال طلب الشحن -->
-<div id="charge-modal" class="fixed inset-0 z-[100] hidden items-center justify-center modal-bg bg-black/70">
-  <div class="bg-slate-900 border border-slate-700 rounded-3xl p-8 w-full max-w-md mx-4 shadow-2xl">
-    <h2 class="text-xl font-black text-center mb-6 text-amber-400"><i class="fas fa-wallet"></i> طلب شحن رصيد</h2>
-    <div class="space-y-4">
-      <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-sm space-y-2">
-        <p class="text-gray-400">أيدي حسابك:</p>
-        <p id="charge-uid" class="text-amber-400 font-mono font-bold text-lg"></p>
-      </div>
-      <select id="charge-method" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition">
-        <option value="">اختر طريقة الدفع</option>
-        <option value="ShamCash">شام كاش</option>
-        <option value="Binance">بينانس / كريبتو</option>
-      </select>
-      <input id="charge-amount" type="number" min="1" placeholder="المبلغ بالدولار ($)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition">
-      
-      <div id="charge-wallet" class="hidden bg-slate-950 p-4 rounded-xl border border-amber-500/30 text-sm space-y-2">
-        <p class="text-amber-400 font-bold">عنوان المحفظة:</p>
-        <p id="charge-wallet-addr" class="font-mono text-gray-200 text-xs break-all"></p>
-        <button onclick="copyWallet()" class="text-xs text-blue-400 hover:text-blue-300"><i class="fas fa-copy"></i> نسخ العنوان</button>
-      </div>
-
-      <p id="charge-error" class="text-red-400 text-sm hidden"></p>
-      <button onclick="sendChargeRequest()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 py-3 rounded-xl font-black transition btn-click">
-        <i class="fab fa-telegram"></i> إرسال طلب الشحن للإدارة
-      </button>
-      <button onclick="closeChargeModal()" class="w-full bg-slate-700 hover:bg-slate-600 py-2 rounded-xl text-sm transition">إلغاء</button>
-    </div>
-  </div>
-</div>
-
-<!-- المحتوى الرئيسي -->
-<main class="max-w-6xl mx-auto p-4 md:p-8 space-y-10">
-
-  <!-- قسم الرصيد والشحن -->
-  <div id="balance-section" class="bg-slate-900/90 p-6 rounded-3xl border border-emerald-500/30 shadow-2xl">
-    <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-      <div class="flex items-center gap-4">
-        <div class="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl text-emerald-400">
-          <i class="fas fa-wallet text-3xl"></i>
-        </div>
-        <div>
-          <h3 class="text-gray-400 text-xs mb-1">الرصيد المتاح | أيدي: <span id="balance-uid" class="text-amber-400 font-mono font-bold">--</span></h3>
-          <div class="text-3xl font-black text-emerald-400">$<span id="balance-amount">0.00</span></div>
-        </div>
-      </div>
-      <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
-        <!-- شحن بكود -->
-        <div class="flex gap-2 flex-1">
-          <input id="voucher-input" type="text" placeholder="كود الشحن..." class="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-emerald-500 transition"><button onclick="redeemVoucher()" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black px-5 py-2.5 rounded-xl text-sm transition btn-click">شحن</button>
-        </div>
-        <!-- طلب شحن -->
-        <button onclick="openChargeModal()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-5 py-2.5 rounded-xl text-sm transition btn-click flex items-center gap-2">
-          <i class="fas fa-plus-circle"></i> طلب شحن
-        </button>
-      </div>
-    </div>
-    <p id="voucher-msg" class="text-xs mt-3 hidden"></p>
-    <!-- تنبيه تسجيل الدخول -->
-    <div id="login-prompt" class="mt-4 bg-blue-500/10 border border-blue-500/30 rounded-2xl p-4 text-center">
-      <p class="text-blue-300 text-sm">👋 سجل دخولك أو أنشئ حساباً للاستفادة من جميع الخدمات وتتبع رصيدك</p>
-      <div class="flex gap-3 justify-center mt-3">
-        <button onclick="showModal('login')" class="bg-blue-600 hover:bg-blue-500 px-6 py-2 rounded-xl text-sm font-bold transition btn-click">دخول</button>
-        <button onclick="showModal('register')" class="bg-emerald-600 hover:bg-emerald-500 px-6 py-2 rounded-xl text-sm font-bold transition btn-click">تسجيل جديد</button>
-      </div>
-    </div>
-  </div>
+<!-- ===== صفحة الرئيسية ===== -->
+<div id="page-home" class="page active" style="padding:16px;max-width:700px;margin:0 auto;">
 
   <!-- بنر ترجيع الحسابات -->
-  <section>
-    <div class="bg-gradient-to-r from-purple-950/60 via-indigo-950/60 to-slate-900 border-2 border-purple-500/40 p-6 md:p-8 rounded-3xl shadow-2xl card-glow">
-      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-        <div class="space-y-3 max-w-2xl">
-          <div class="flex items-center gap-2">
-            <span class="bg-purple-600 text-white text-xs font-black px-3 py-1 rounded-full">خدمة مميزة</span>
-            <span class="text-purple-300 text-xs font-semibold"><i class="fas fa-shield-alt"></i> استرجاع مضمون</span>
-          </div>
-          <h2 class="text-2xl md:text-3xl font-black text-white flex items-center gap-3">
-            <i class="fas fa-user-check text-purple-400"></i> خدمة ترجيع الحسابات المعلقة والطعن الاحترافي
-          </h2>
-          <p class="text-sm text-gray-300 leading-relaxed">
-            متخصصون في استرجاع الحسابات المعلقة (Instagram / Facebook)، تقديم طعن احترافي مدعوم بأقوى الحجج والمتابعة حتى النتيجة.
-          </p>
-        </div>
-        <div class="w-full md:w-auto flex flex-col items-center gap-3 bg-slate-950/80 p-5 rounded-2xl border border-purple-500/30 text-center min-w-[220px]">
-          <span class="text-xs text-purple-300 font-bold">التكلفة الإجمالية</span>
-          <span class="text-4xl font-black text-purple-400">$5</span>
-          <button onclick="openBuyModal('ترجيع حساب معلق (Instagram/Facebook)', 5, 'account')" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-extrabold py-3 px-6 rounded-xl transition shadow-lg btn-click flex justify-center items-center gap-2">
-            <i class="fas fa-paper-plane"></i> طلب الخدمة الآن
-          </button>
-        </div>
-      </div>
+  <div style="background:linear-gradient(135deg,#4c1d95,#1e1b4b);border:2px solid #7c3aed;border-radius:20px;padding:20px;margin-bottom:16px;">
+    <div style="display:flex;gap:8px;margin-bottom:10px;">
+      <span style="background:#7c3aed;color:white;font-size:11px;font-weight:900;padding:4px 12px;border-radius:20px;">خدمة مميزة</span>
+      <span style="color:#c4b5fd;font-size:11px;"><i class="fas fa-shield-alt"></i> استرجاع مضمون</span>
     </div>
-  </section>
-
-  <!-- الاشتراكات والخدمات المميزة -->
-  <section class="space-y-4">
-    <h2 class="text-xl font-bold text-purple-400 flex items-center gap-2 border-r-4 border-purple-500 pr-3">
-      <i class="fas fa-gem"></i> الاشتراكات والخدمات المميزة
-    </h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-      <!-- توثيق إنستغرام -->
-      <div class="bg-slate-900 p-6 rounded-2xl border border-pink-500/30 shadow-xl flex flex-col justify-between card-glow relative overflow-hidden">
-        <div class="absolute top-0 left-0 bg-pink-500 text-white text-[10px] font-bold px-3 py-1 rounded-br-xl">رسمي وموثق</div>
-        <div>
-          <div class="flex justify-between items-start mb-3">
-            <span class="bg-pink-500/10 text-pink-400 text-xs px-3 py-1 rounded-full border border-pink-500/20 font-semibold">اشتراك شهري</span><span class="text-2xl font-black text-pink-400">$15</span>
-          </div>
-          <h3 class="text-lg font-bold text-white mb-2 flex items-center gap-2">
-            <i class="fab fa-instagram text-pink-500 text-xl"></i> توثيق حسابات إنستغرام
-          </h3>
-          <p class="text-sm text-gray-400 leading-relaxed mb-4">الحصول على العلامة الزرقاء الرسمية مع حماية ودعم فني متكامل لمدة شهر.</p>
-        </div>
-        <button onclick="openBuyModal('توثيق حساب إنستغرام (الشارة الزرقاء)', 15, 'account')" class="w-full bg-pink-600 hover:bg-pink-500 text-white font-extrabold py-3 rounded-xl transition text-center flex justify-center items-center gap-2 shadow-lg btn-click">
-          <i class="fas fa-badge-check"></i> توثيق الآن ($15)
-        </button>
-      </div>
-
-      <!-- جميناي بريميوم -->
-      <div class="bg-slate-900 p-6 rounded-2xl border border-purple-500/30 shadow-xl flex flex-col justify-between card-glow">
-        <div>
-          <div class="flex justify-between items-start mb-3">
-            <span class="bg-purple-500/10 text-purple-400 text-xs px-3 py-1 rounded-full border border-purple-500/20 font-semibold">اشتراك شهر</span>
-            <span class="text-2xl font-black text-purple-400">$10</span>
-          </div>
-          <h3 class="text-lg font-bold text-white mb-2 flex items-center gap-2">
-            <i class="fas fa-robot text-purple-400"></i> اشتراك جميناي بريميوم
-          </h3>
-          <p class="text-sm text-gray-400 leading-relaxed mb-4">تفعيل الذكاء الاصطناعي Gemini بأعلى أداء بدون قيود لمدة شهر كامل.</p>
-        </div>
-        <button onclick="openBuyModal('اشتراك جميناي بريميوم (Gemini)', 10, 'account')" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-extrabold py-3 rounded-xl transition text-center flex justify-center items-center gap-2 shadow-lg btn-click">
-          <i class="fas fa-shopping-cart"></i> شراء الآن ($10)
-        </button>
-      </div>
-
-      <!-- تلغرام بريميوم -->
-      <div class="bg-slate-900 p-6 rounded-2xl border border-blue-500/30 shadow-xl flex flex-col justify-between card-glow">
-        <div>
-          <div class="flex justify-between items-start mb-3">
-            <span class="bg-blue-500/10 text-blue-400 text-xs px-3 py-1 rounded-full border border-blue-500/20 font-semibold">اشتراك شهر</span>
-            <span class="text-2xl font-black text-blue-400">$10</span>
-          </div>
-          <h3 class="text-lg font-bold text-white mb-2 flex items-center gap-2">
-            <i class="fab fa-telegram text-blue-400"></i> تفعيل تلغرام بريميوم
-          </h3>
-          <p class="text-sm text-gray-400 leading-relaxed mb-4">جميع مميزات التلغرام البريميوم، الرموز الحصرية والتنزيل السريع لمدة شهر.</p>
-        </div>
-        <button onclick="openBuyModal('تفعيل تلغرام بريميوم', 10, 'telegram')" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-extrabold py-3 rounded-xl transition text-center flex justify-center items-center gap-2 shadow-lg btn-click">
-          <i class="fas fa-shopping-cart"></i> شراء الآن ($10)
-        </button>
-      </div>
-
+    <h2 style="font-size:18px;font-weight:900;margin-bottom:8px;"><i class="fas fa-user-check" style="color:#a78bfa;"></i> ترجيع الحسابات المعلقة</h2>
+    <p style="font-size:13px;color:#cbd5e1;margin-bottom:16px;">استرجاع حسابات Instagram / Facebook مع طعن احترافي حتى النتيجة.</p>
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <span style="font-size:32px;font-weight:900;color:#a78bfa;">$5</span>
+      <button onclick="openModal('ترجيع حساب معلق Instagram/Facebook','5','account')" class="btn" style="background:linear-gradient(to right,#7c3aed,#4f46e5);color:white;padding:12px 20px;border-radius:14px;font-weight:900;font-size:14px;">
+        <i class="fas fa-paper-plane"></i> طلب الخدمة
+      </button>
     </div>
-  </section>
+  </div>
 
-  <!-- أرقام واتساب -->
-  <section class="space-y-4">
-    <h2 class="text-xl font-bold text-emerald-400 flex items-center gap-2 border-r-4 border-emerald-500 pr-3">
-      <i class="fab fa-whatsapp"></i> متجر أرقام الواتساب المباشرة والمكفولة
-    </h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div class="bg-slate-900 p-6 rounded-2xl border border-emerald-500/20 shadow-xl flex flex-col justify-between card-glow">
-        <div>
-          <div class="flex justify-between items-start mb-3">
-            <span class="bg-emerald-500/10 text-emerald-400 text-xs px-3 py-1 rounded-full border border-emerald-500/20 font-semibold">رقم جاهز ومكفول</span>
-            <span class="text-2xl font-black text-emerald-400">$7</span></div>
-          <h3 class="text-lg font-bold text-white mb-2 flex items-center gap-2">
-            <i class="fas fa-flag text-emerald-400"></i> أرقام واتساب عربية
-          </h3>
-          <p class="text-sm text-gray-400 leading-relaxed mb-4">تفعيل واتساب بأرقام عربية مميزة (السعودية، الأردن، الكويت) بسرعة وجودة عالية.</p>
-        </div>
-        <button onclick="openBuyModal('رقم واتساب عربي', 7, 'country')" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold py-3 rounded-xl transition text-center flex justify-center items-center gap-2 shadow-lg btn-click">
-          <i class="fas fa-globe-asia"></i> اختيار الدولة والشراء ($7)
-        </button>
-      </div>
-      <div class="bg-slate-900 p-6 rounded-2xl border border-teal-500/20 shadow-xl flex flex-col justify-between card-glow">
-        <div>
-          <div class="flex justify-between items-start mb-3">
-            <span class="bg-teal-500/10 text-teal-400 text-xs px-3 py-1 rounded-full border border-teal-500/20 font-semibold">رقم جاهز ومكفول</span>
-            <span class="text-2xl font-black text-teal-400">$7</span>
-          </div>
-          <h3 class="text-lg font-bold text-white mb-2 flex items-center gap-2">
-            <i class="fas fa-globe-americas text-teal-400"></i> أرقام واتساب أجنبية
-          </h3>
-          <p class="text-sm text-gray-400 leading-relaxed mb-4">تفعيل واتساب بأرقام أجنبية مضمونة (إندونيسيا، فيتنام، إيران) مفعلة وجاهزة فوراً.</p>
-        </div>
-        <button onclick="openBuyModal('رقم واتساب أجنبي', 7, 'country')" class="w-full bg-teal-600 hover:bg-teal-500 text-white font-extrabold py-3 rounded-xl transition text-center flex justify-center items-center gap-2 shadow-lg btn-click">
-          <i class="fas fa-globe"></i> اختيار الدولة والشراء ($7)
-        </button>
-      </div>
-    </div>
-  </section>
+  <!-- الاشتراكات -->
+  <h3 style="font-size:16px;font-weight:900;color:#a78bfa;margin-bottom:12px;border-right:4px solid #7c3aed;padding-right:10px;"><i class="fas fa-gem"></i> الاشتراكات المميزة</h3>
 
-  <!-- الخدمات المشددة -->
-  <section class="space-y-4">
-    <h2 class="text-xl font-bold text-amber-400 flex items-center gap-2 border-r-4 border-amber-500 pr-3">
-      <i class="fas fa-user-shield"></i> خدمات الواتساب المشددة والخاصة
-    </h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div class="bg-slate-900 p-6 rounded-2xl border border-amber-500/20 shadow-xl flex flex-col justify-between card-glow">
+  <div style="display:grid;gap:12px;margin-bottom:16px;">
+
+    <div class="card" style="padding:16px;">
+      <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:10px;">
         <div>
-          <div class="flex justify-between items-start mb-3">
-            <span class="bg-amber-500/10 text-amber-400 text-xs px-3 py-1 rounded-full border border-amber-500/20 font-semibold">خدمة خاصة</span>
-            <span class="text-2xl font-black text-amber-400">$30</span>
-          </div>
-          <h3 class="text-lg font-bold text-white mb-2 flex items-center gap-2">
-            <i class="fas fa-lock-open text-amber-400"></i> فك أرقام واتساب مشدد
-          </h3>
-          <p class="text-sm text-gray-400 leading-relaxed mb-4">حل مشاكل الحظر المشدد والدائم وحظر الانتهاك لجميع أرقام الواتساب.</p>
+          <span style="background:#be185d22;color:#f472b6;font-size:11px;padding:3px 10px;border-radius:10px;border:1px solid #be185d44;">شهري</span>
+          <h4 style="font-size:15px;font-weight:900;margin-top:6px;"><i class="fab fa-instagram" style="color:#f472b6;"></i> توثيق إنستغرام</h4>
+          <p style="font-size:12px;color:#94a3b8;margin-top:4px;">العلامة الزرقاء الرسمية لمدة شهر</p>
         </div>
-        <button onclick="openBuyModal('فك حظر واتساب مشدد', 30, 'phone')" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold py-3 rounded-xl transition text-center flex justify-center items-center gap-2 shadow-lg btn-click">
-          <i class="fas fa-unlock"></i> طلب الخدمة ($30)
-        </button>
+        <span style="font-size:24px;font-weight:900;color:#f472b6;">$15</span>
       </div>
-      <div class="bg-slate-900 p-6 rounded-2xl border border-red-500/20 shadow-xl flex flex-col justify-between card-glow">
-        <div>
-          <div class="flex justify-between items-start mb-3">
-            <span class="bg-red-500/10 text-red-400 text-xs px-3 py-1 rounded-full border border-red-500/20 font-semibold">خدمة خاصة</span>
-            <span class="text-2xl font-black text-red-400">$35</span>
-          </div>
-          <h3 class="text-lg font-bold text-white mb-2 flex items-center gap-2">
-            <i class="fas fa-ban text-red-400"></i> حظر أرقام واتساب مشدد</h3>
-          <p class="text-sm text-gray-400 leading-relaxed mb-4">تنفيذ الحظر المباشر والمشدد للحسابات المستهدفة وفق إجراءات مخصصة.</p>
-        </div>
-        <button onclick="openBuyModal('حظر أرقام واتساب مشدد', 35, 'phone')" class="w-full bg-red-600 hover:bg-red-500 text-white font-extrabold py-3 rounded-xl transition text-center flex justify-center items-center gap-2 shadow-lg btn-click">
-          <i class="fas fa-ban"></i> طلب الخدمة ($35)
-        </button>
-      </div>
+      <button onclick="openModal('توثيق حساب إنستغرام الشارة الزرقاء','15','account')" class="btn" style="width:100%;background:#be185d;color:white;padding:12px;border-radius:12px;font-weight:900;">
+        <i class="fas fa-badge-check"></i> توثيق الآن
+      </button>
     </div>
-  </section>
+
+    <div class="card" style="padding:16px;">
+      <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:10px;">
+        <div>
+          <span style="background:#6d28d922;color:#a78bfa;font-size:11px;padding:3px 10px;border-radius:10px;border:1px solid #6d28d944;">شهري</span>
+          <h4 style="font-size:15px;font-weight:900;margin-top:6px;"><i class="fas fa-robot" style="color:#a78bfa;"></i> جميناي بريميوم</h4>
+          <p style="font-size:12px;color:#94a3b8;margin-top:4px;">Gemini بأعلى أداء بدون قيود</p>
+        </div>
+        <span style="font-size:24px;font-weight:900;color:#a78bfa;">$10</span>
+      </div>
+      <button onclick="openModal('اشتراك جميناي بريميوم Gemini','10','email')" class="btn" style="width:100%;background:#7c3aed;color:white;padding:12px;border-radius:12px;font-weight:900;">
+        <i class="fas fa-shopping-cart"></i> شراء الآن
+      </button>
+    </div><div class="card" style="padding:16px;">
+      <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:10px;">
+        <div>
+          <span style="background:#1d4ed822;color:#60a5fa;font-size:11px;padding:3px 10px;border-radius:10px;border:1px solid #1d4ed844;">شهري</span>
+          <h4 style="font-size:15px;font-weight:900;margin-top:6px;"><i class="fab fa-telegram" style="color:#60a5fa;"></i> تلغرام بريميوم</h4>
+          <p style="font-size:12px;color:#94a3b8;margin-top:4px;">⏳ ينفذ خلال 3 ساعات من الطلب</p>
+        </div>
+        <span style="font-size:24px;font-weight:900;color:#60a5fa;">$10</span>
+      </div>
+      <button onclick="openModal('تفعيل تلغرام بريميوم','10','telegram')" class="btn" style="width:100%;background:#2563eb;color:white;padding:12px;border-radius:12px;font-weight:900;">
+        <i class="fas fa-shopping-cart"></i> شراء الآن
+      </button>
+    </div>
+
+  </div>
+
+  <!-- خدمات مشددة -->
+  <h3 style="font-size:16px;font-weight:900;color:#f59e0b;margin-bottom:12px;border-right:4px solid #f59e0b;padding-right:10px;"><i class="fas fa-user-shield"></i> خدمات مشددة</h3>
+  <div style="display:grid;gap:12px;margin-bottom:16px;">
+    <div class="card" style="padding:16px;">
+      <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:10px;">
+        <div>
+          <h4 style="font-size:15px;font-weight:900;"><i class="fas fa-lock-open" style="color:#f59e0b;"></i> فك حظر واتساب مشدد</h4>
+          <p style="font-size:12px;color:#94a3b8;margin-top:4px;">حل الحظر الدائم والمشدد</p>
+        </div>
+        <span style="font-size:24px;font-weight:900;color:#f59e0b;">$30</span>
+      </div>
+      <button onclick="openModal('فك حظر واتساب مشدد','30','phone')" class="btn" style="width:100%;background:#d97706;color:#0f172a;padding:12px;border-radius:12px;font-weight:900;">
+        <i class="fas fa-unlock"></i> طلب الخدمة
+      </button>
+    </div>
+    <div class="card" style="padding:16px;">
+      <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:10px;">
+        <div>
+          <h4 style="font-size:15px;font-weight:900;"><i class="fas fa-ban" style="color:#f87171;"></i> حظر أرقام واتساب مشدد</h4>
+          <p style="font-size:12px;color:#94a3b8;margin-top:4px;">تنفيذ الحظر المباشر للحسابات</p>
+        </div>
+        <span style="font-size:24px;font-weight:900;color:#f87171;">$35</span>
+      </div>
+      <button onclick="openModal('حظر أرقام واتساب مشدد','35','phone')" class="btn" style="width:100%;background:#dc2626;color:white;padding:12px;border-radius:12px;font-weight:900;">
+        <i class="fas fa-ban"></i> طلب الخدمة
+      </button>
+    </div>
+  </div>
 
   <!-- طرق الدفع -->
-  <section class="bg-slate-900 p-6 rounded-3xl border border-slate-800 shadow-xl space-y-6">
-    <h2 class="text-xl font-bold text-emerald-400 flex items-center gap-2">
-      <i class="fas fa-wallet"></i> طرق الدفع المتاحة
-    </h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800">
-        <div class="flex items-center justify-between mb-2">
-          <span class="font-bold text-emerald-400 text-sm">ShamCash - شام كاش</span>
-          <i class="fas fa-money-bill-wave text-amber-400"></i>
-        </div>
-        <p class="text-xs text-gray-400 mb-2">عنوان المحفظة:</p>
-        <div class="bg-slate-900 p-3 rounded-xl text-xs font-mono text-gray-200 border border-slate-800 break-all flex items-center justify-between gap-2">
-          <span id="sham-addr">acaf0bc3dbb14343c3502bdbb345c90d</span>
-          <i class="fas fa-copy text-gray-500 hover:text-white cursor-pointer flex-shrink-0" onclick="copyText('acaf0bc3dbb14343c3502bdbb345c90d', this)"></i>
-        </div>
+  <h3 style="font-size:16px;font-weight:900;color:#34d399;margin-bottom:12px;border-right:4px solid #34d399;padding-right:10px;"><i class="fas fa-wallet"></i> طرق الدفع</h3>
+  <div style="display:grid;gap:10px;">
+    <div class="card" style="padding:14px;">
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+        <span style="color:#34d399;font-weight:700;">شام كاش</span>
+        <i class="fas fa-copy btn" style="color:#64748b;" onclick="copyText('acaf0bc3dbb14343c3502bdbb345c90d')"></i>
       </div>
-      <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800">
-        <div class="flex items-center justify-between mb-2">
-          <span class="font-bold text-amber-400 text-sm">Binance Pay / Crypto</span>
-          <i class="fab fa-bitcoin text-amber-400"></i>
+      <div style="font-family:monospace;font-size:11px;color:#cbd5e1;word-break:break-all;background:#0f172a;padding:8px;border-radius:8px;">acaf0bc3dbb14343c3502bdbb345c90d</div>
+    </div>
+    <div class="card" style="padding:14px;">
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+        <span style="color:#fbbf24;font-weight:700;">بينانس USDT</span>
+        <i class="fas fa-copy btn" style="color:#64748b;" onclick="copyText('0x349e41ae6b048c2079a653b900e02ef90a315e09')"></i>
+      </div>
+      <div style="font-family:monospace;font-size:11px;color:#cbd5e1;word-break:break-all;background:#0f172a;padding:8px;border-radius:8px;">0x349e41ae6b048c2079a653b900e02ef90a315e09</div>
+    </div>
+  </div>
+
+</div><!-- ===== صفحة أرقام واتساب ===== -->
+<div id="page-numbers" class="page" style="padding:16px;max-width:700px;margin:0 auto;">
+  <h2 style="font-size:18px;font-weight:900;color:#34d399;margin-bottom:16px;"><i class="fab fa-whatsapp"></i> أرقام واتساب</h2>
+
+  <div style="display:flex;gap:8px;margin-bottom:16px;">
+    <button onclick="filterNumbers('all')" id="btn-all" class="btn" style="flex:1;background:#16a34a;color:white;padding:10px;border-radius:12px;font-weight:700;">الكل</button>
+    <button onclick="filterNumbers('arabic')" id="btn-arabic" class="btn" style="flex:1;background:#1e293b;color:#94a3b8;padding:10px;border-radius:12px;font-weight:700;">عربية</button>
+    <button onclick="filterNumbers('foreign')" id="btn-foreign" class="btn" style="flex:1;background:#1e293b;color:#94a3b8;padding:10px;border-radius:12px;font-weight:700;">أجنبية</button>
+  </div>
+
+  <div id="numbers-list"></div>
+</div>
+
+<!-- ===== صفحة المحفظة ===== -->
+<div id="page-wallet" class="page" style="max-width:700px;margin:0 auto;">
+  <div class="balance-card">
+    <div style="font-size:13px;color:#bfdbfe;margin-bottom:8px;"><i class="fas fa-wallet"></i> رصيدك الحالي</div>
+    <div style="font-size:40px;font-weight:900;">$0.00</div>
+    <div style="font-size:12px;color:#bfdbfe;margin-top:8px;">لشحن رصيدك تواصل مع الإدارة</div>
+  </div>
+
+  <div style="padding:16px;">
+    <div style="display:grid;gap:10px;margin-bottom:20px;">
+      <a href="https://wa.me/963984335910?text=أريد شحن رصيد" target="_blank" class="btn" style="background:#16a34a;color:white;padding:14px;border-radius:14px;font-weight:900;text-align:center;text-decoration:none;display:block;">
+        <i class="fab fa-whatsapp"></i> شحن عبر واتساب
+      </a>
+      <a href="https://t.me/ahmad88_m" target="_blank" class="btn" style="background:#2563eb;color:white;padding:14px;border-radius:14px;font-weight:900;text-align:center;text-decoration:none;display:block;">
+        <i class="fab fa-telegram"></i> شحن عبر تلغرام
+      </a>
+    </div>
+
+    <h3 style="font-size:16px;font-weight:900;color:#34d399;margin-bottom:12px;"><i class="fas fa-wallet"></i> طرق الدفع</h3>
+    <div style="display:grid;gap:10px;">
+      <div class="card" style="padding:14px;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+          <span style="color:#34d399;font-weight:700;">شام كاش</span>
+          <i class="fas fa-copy btn" style="color:#64748b;" onclick="copyText('acaf0bc3dbb14343c3502bdbb345c90d')"></i>
         </div>
-        <p class="text-xs text-gray-400 mb-2">عنوان المحفظة (USDT):</p>
-        <div class="bg-slate-900 p-3 rounded-xl text-xs font-mono text-gray-200 border border-slate-800 break-all flex items-center justify-between gap-2">
-          <span id="binance-addr">0x349e41ae6b048c2079a653b900e02ef90a315e09</span>
-          <i class="fas fa-copy text-gray-500 hover:text-white cursor-pointer flex-shrink-0" onclick="copyText('0x349e41ae6b048c2079a653b900e02ef90a315e09', this)"></i>
+        <div style="font-family:monospace;font-size:11px;color:#cbd5e1;word-break:break-all;background:#0f172a;padding:8px;border-radius:8px;">acaf0bc3dbb14343c3502bdbb345c90d</div>
+      </div>
+      <div class="card" style="padding:14px;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+          <span style="color:#fbbf24;font-weight:700;">بينانس USDT</span>
+          <i class="fas fa-copy btn" style="color:#64748b;" onclick="copyText('0x349e41ae6b048c2079a653b900e02ef90a315e09')"></i>
         </div>
+        <div style="font-family:monospace;font-size:11px;color:#cbd5e1;word-break:break-all;background:#0f172a;padding:8px;border-radius:8px;">0x349e41ae6b048c2079a653b900e02ef90a315e09</div>
       </div>
     </div>
-  </section>
+  </div>
+</div>
 
-</main>
+<!-- ===== صفحة طلباتي ===== -->
+<div id="page-orders" class="page" style="padding:16px;max-width:700px;margin:0 auto;">
+  <h2 style="font-size:18px;font-weight:900;margin-bottom:16px;"><i class="fas fa-box"></i> طلباتي</h2>
+  <div style="text-align:center;padding:60px 20px;color:#64748b;">
+    <i class="fas fa-box-open" style="font-size:60px;margin-bottom:16px;display:block;"></i>
+    <p style="font-size:16px;font-weight:700;">لا توجد طلبات بعد</p>
+    <p style="font-size:13px;margin-top:8px;">اطلب خدمتك من الرئيسية أو أرقام واتساب</p>
+  </div>
+</div><!-- تبار التنقل -->
+<div class="tab-bar">
+  <div class="tab-item active" id="tab-home" onclick="switchTab('home')">
+    <i class="fas fa-home"></i>
+    <span>الرئيسية</span>
+  </div>
+  <div class="tab-item" id="tab-numbers" onclick="switchTab('numbers')">
+    <i class="fab fa-whatsapp"></i>
+    <span>الأرقام</span>
+  </div>
+  <div class="tab-item" id="tab-wallet" onclick="switchTab('wallet')">
+    <i class="fas fa-wallet"></i>
+    <span>المحفظة</span>
+  </div>
+  <div class="tab-item" id="tab-orders" onclick="switchTab('orders')">
+    <i class="fas fa-box"></i>
+    <span>طلباتي</span>
+  </div>
+</div>
+
+<!-- مودال الطلب -->
+<div id="order-modal" class="modal-overlay">
+  <div style="background:#1e293b;border:1px solid #334155;border-radius:24px;padding:24px;width:90%;max-width:440px;position:relative;">
+    <button onclick="closeModal()" style="position:absolute;top:16px;left:16px;background:none;border:none;color:#64748b;font-size:20px;cursor:pointer;"><i class="fas fa-times"></i></button>
+    <h3 id="modal-title" style="font-size:18px;font-weight:900;text-align:center;margin-bottom:4px;color:#60a5fa;"></h3>
+    <p id="modal-price" style="text-align:center;font-size:32px;font-weight:900;color:#34d399;margin-bottom:20px;"></p>
+    <div style="display:grid;gap:12px;">
+      <input id="modal-name" type="text" placeholder="اسمك الكامل..." style="background:#0f172a;border:1px solid #334155;border-radius:12px;padding:12px 16px;color:white;font-size:14px;outline:none;width:100%;">
+      <input id="modal-phone" type="text" placeholder="رقم واتساب للتواصل..." style="background:#0f172a;border:1px solid #334155;border-radius:12px;padding:12px 16px;color:white;font-size:14px;outline:none;width:100%;">
+      <input id="modal-detail" type="text" placeholder="..." style="background:#0f172a;border:1px solid #334155;border-radius:12px;padding:12px 16px;color:white;font-size:14px;outline:none;width:100%;">
+      <select id="modal-payment" style="background:#0f172a;border:1px solid #334155;border-radius:12px;padding:12px 16px;color:white;font-size:14px;outline:none;width:100%;">
+        <option value="">اختر طريقة الدفع</option>
+        <option value="شام كاش">شام كاش</option>
+        <option value="بينانس">بينانس / USDT</option>
+      </select>
+      <div style="background:#0f172a;border-radius:12px;padding:12px;font-size:12px;color:#94a3b8;">
+        <p style="margin-bottom:6px;font-weight:700;color:#fbbf24;">💳 بعد الدفع أرسل إيصال للإدارة</p>
+        <p>🟢 شام كاش: acaf0bc3dbb14343c3502bdbb345c90d</p>
+        <p style="margin-top:4px;">🟡 بينانس: 0x349e41ae6b048c2079a653b900e02ef90a315e09</p>
+      </div>
+      <button onclick="submitOrder()" class="btn" style="background:linear-gradient(to right,#2563eb,#7c3aed);color:white;padding:14px;border-radius:14px;font-weight:900;font-size:16px;width:100%;">
+        <i class="fab fa-telegram"></i> إرسال الطلب
+      </button>
+    </div>
+  </div>
+</div>
 
 <!-- Toast -->
-<div id="toast" class="toast hidden"></div>
+<div id="toast" class="toast"></div>
 
 <script>
-const API = ""; // Vercel يربط تلقائياً
-let currentUser = null;
-let buyData = {};
+const BOT_TOKEN = "8062958069:AAHMn-CK9-UN0f2pmsu4H3POi-9I9kPNvo8";
+const ADMIN_ID = "6729808723";
+const WA = "963984335910";
 
-// ===== AUTH =====
-function showModal(type) {
-  document.getElementById('auth-modal').classList.remove('hidden');
-  document.getElementById('auth-modal').classList.add('flex');
-  switchForm(type);
+let currentService = {};
+
+// الدول
+const countries = [
+  {name:"السعودية",flag:"🇸🇦",price:8,type:"arabic"},
+  {name:"الإمارات",flag:"🇦🇪",price:7,type:"arabic"},
+  {name:"الكويت",flag:"🇰🇼",price:7.5,type:"arabic"},
+  {name:"الأردن",flag:"🇯🇴",price:2,type:"arabic"},
+  {name:"مصر",flag:"🇪🇬",price:1.5,type:"arabic"},
+  {name:"المغرب",flag:"🇲🇦",price:1,type:"arabic"},
+  {name:"قطر",flag:"🇶🇦",price:10,type:"arabic"},
+  {name:"عُمان",flag:"🇴🇲",price:6,type:"arabic"},
+  {name:"إندونيسيا",flag:"🇮🇩",price:1,type:"foreign"},
+  {name:"فيتنام",flag:"🇻🇳",price:0.5,type:"foreign"},
+  {name:"الفلبين",flag:"🇵🇭",price:0.5,type:"foreign"},
+  {name:"تركيا",flag:"🇹🇷",price:2,type:"foreign"},
+  {name:"كندا",flag:"🇨🇦",price:1,type:"foreign"},
+  {name:"المغرب",flag:"🇲🇦",price:0.7,type:"foreign"},
+  {name:"تايلاند",flag:"🇹🇭",price:0.8,type:"foreign"},
+  {name:"إيران",flag:"🇮🇷",price:1.5,type:"foreign"},
+];function renderNumbers(filter) {
+  const list = document.getElementById("numbers-list");
+  const filtered = filter === "all" ? countries : countries.filter(c => c.type === filter);
+  list.innerHTML = filtered.map(c => 
+    <div class="country-card">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span style="font-size:32px;">${c.flag}</span>
+        <div>
+          <div style="font-weight:900;font-size:15px;">${c.name}</div>
+          <div style="font-size:12px;color:#94a3b8;">رقم واتساب جاهز</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
+        <span style="font-size:18px;font-weight:900;color:#34d399;">$${c.price}</span>
+        <button onclick="openModal('رقم واتساب ${c.name}','${c.price}','country')" class="btn" style="background:#16a34a;color:white;padding:8px 16px;border-radius:10px;font-weight:700;font-size:13px;">
+          <i class="fas fa-shopping-cart"></i> شراء
+        </button>
+      </div>
+    </div>
+  ).join("");
 }
+
+function filterNumbers(type) {
+  renderNumbers(type);
+  document.getElementById("btn-all").style.background = type==="all"?"#16a34a":"#1e293b";
+  document.getElementById("btn-all").style.color = type==="all"?"white":"#94a3b8";
+  document.getElementById("btn-arabic").style.background = type==="arabic"?"#16a34a":"#1e293b";
+  document.getElementById("btn-arabic").style.color = type==="arabic"?"white":"#94a3b8";
+  document.getElementById("btn-foreign").style.background = type==="foreign"?"#16a34a":"#1e293b";
+  document.getElementById("btn-foreign").style.color = type==="foreign"?"white":"#94a3b8";
+}
+
+function switchTab(tab) {
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".tab-item").forEach(t => t.classList.remove("active"));
+  document.getElementById("page-"+tab).classList.add("active");
+  document.getElementById("tab-"+tab).classList.add("active");
+}
+
+function openModal(service, price, type) {
+  currentService = {service, price, type};
+  document.getElementById("modal-title").textContent = service;
+  document.getElementById("modal-price").textContent = "$" + price;
+  const detail = document.getElementById("modal-detail");
+  if(type==="account") detail.placeholder = "رابط أو يوزر الحساب...";
+  else if(type==="telegram") detail.placeholder = "يوزر تلغرام @username...";
+  else if(type==="email") detail.placeholder = "البريد الإلكتروني...";
+  else if(type==="phone") detail.placeholder = "رقم الهاتف...";
+  else if(type==="country") detail.placeholder = "الدولة: " + service.replace("رقم واتساب ","");
+  document.getElementById("order-modal").classList.add("show");
+}
+
 function closeModal() {
-  document.getElementById('auth-modal').classList.add('hidden');
-  document.getElementById('auth-modal').classList.remove('flex');
-}
-function switchForm(type) {
-  document.getElementById('login-form').classList.toggle('hidden', type !== 'login');
-  document.getElementById('register-form').classList.toggle('hidden', type !== 'register');
+  document.getElementById("order-modal").classList.remove("show");
 }
 
-async function doLogin() {
-  const username = document.getElementById('login-username').value.trim();
-  const password = document.getElementById('login-password').value.trim();
-  const err = document.getElementById('login-error');
-  err.classList.add('hidden');
-  if (!username || !password) { err.textContent = "أدخل جميع الحقول"; err.classList.remove('hidden'); return; }
-  try {
-    const res = await fetch('/api/login', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({username, password}) });
-    const data = await res.json();
-    if (data.success) {
-      setUser(data);
-      closeModal();
-      showToast('مرحباً ' + data.fullname + '! 👋', 'success');
-    } else {
-      err.textContent = data.message;
-      err.classList.remove('hidden');
-    }
-  } catch(e) { err.textContent = "خطأ في الاتصال بالسيرفر"; err.classList.remove('hidden'); }
-}async function doRegister() {
-  const fullname = document.getElementById('reg-fullname').value.trim();
-  const username = document.getElementById('reg-username').value.trim();
-  const password = document.getElementById('reg-password').value.trim();
-  const err = document.getElementById('reg-error');
-  err.classList.add('hidden');
-  if (!fullname  !username  !password) { err.textContent = "أدخل جميع الحقول"; err.classList.remove('hidden'); return; }
-  if (!/^[a-zA-Z0-9_]+$/.test(username)) { err.textContent = "اسم المستخدم إنجليزي فقط بدون مسافات"; err.classList.remove('hidden'); return; }
-  try {
-    const res = await fetch('/api/register', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({fullname, username, password}) });
-    const data = await res.json();
-    if (data.success) {
-      setUser({...data, balance: 0});
-      closeModal();
-      showToast('تم إنشاء حسابك! أيدي: ' + data.userId, 'success');
-    } else {
-      err.textContent = data.message;
-      err.classList.remove('hidden');
-    }
-  } catch(e) { err.textContent = "خطأ في الاتصال بالسيرفر"; err.classList.remove('hidden'); }
-}
+async function submitOrder() {
+  const name = document.getElementById("modal-name").value.trim();
+  const phone = document.getElementById("modal-phone").value.trim();
+  const detail = document.getElementById("modal-detail").value.trim();
+  const payment = document.getElementById("modal-payment").value;
 
-function setUser(data) {
-  currentUser = data;
-  localStorage.setItem('amrikiUser', JSON.stringify(data));
-  updateUI();
-}
-
-function logout() {
-  currentUser = null;
-  localStorage.removeItem('amrikiUser');
-  updateUI();
-  showToast('تم تسجيل الخروج', 'info');
-}
-
-function updateUI() {
-  const loggedIn = !!currentUser;
-  document.getElementById('user-info').classList.toggle('hidden', !loggedIn);
-  document.getElementById('user-info').classList.toggle('flex', loggedIn);
-  document.getElementById('auth-buttons').classList.toggle('hidden', loggedIn);
-  document.getElementById('login-prompt').classList.toggle('hidden', loggedIn);
-
-  if (loggedIn) {
-    document.getElementById('header-name').textContent = currentUser.fullname;
-    document.getElementById('header-balance').textContent = '$' + parseFloat(currentUser.balance || 0).toFixed(2);
-    document.getElementById('header-uid').textContent = currentUser.userId;
-    document.getElementById('balance-uid').textContent = currentUser.userId;
-    document.getElementById('balance-amount').textContent = parseFloat(currentUser.balance || 0).toFixed(2);
-  } else {
-    document.getElementById('balance-uid').textContent = '--';
-    document.getElementById('balance-amount').textContent = '0.00';
+  if(!name  !phone  !detail || !payment) {
+    showToast("يرجى تعبئة جميع الحقول ❌", "error");
+    return;
   }
-}
 
-// ===== VOUCHER =====
-async function redeemVoucher() {
-  if (!currentUser) { showToast('سجل دخولك أولاً', 'error'); showModal('login'); return; }
-  const code = document.getElementById('voucher-input').value.trim();
-  const msg = document.getElementById('voucher-msg');
-  if (!code) { showToast('أدخل كود الشحن', 'error'); return; }
-  msg.textContent = '⏳ جاري التحقق...';
-  msg.className = 'text-xs mt-3 text-amber-400';
-  msg.classList.remove('hidden');
+  const msg = 🛒 <b>طلب جديد من الموقع</b>\n\n👤 <b>الاسم:</b> ${name}\n📱 <b>واتساب:</b> ${phone}\n📦 <b>الخدمة:</b> ${currentService.service}\n💰 <b>السعر:</b> $${currentService.price}\n📝 <b>التفاصيل:</b> ${detail}\n💳 <b>الدفع:</b> ${payment}\n⏰ ${new Date().toLocaleString("ar-SY")};
+
   try {
-    const res = await fetch('/api/redeem', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({userId: currentUser.userId, code}) });
+    const res = await fetch(https://api.telegram.org/bot${BOT_TOKEN}/sendMessage, {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({chat_id: ADMIN_ID, text: msg, parse_mode: "HTML"})
+    });
     const data = await res.json();
-    if (data.success) {
-      currentUser.balance = data.newBalance;
-      localStorage.setItem('amrikiUser', JSON.stringify(currentUser));
-      updateUI();
-      msg.textContent = '✅ ' + data.message;
-      msg.className = 'text-xs mt-3 text-emerald-400 font-bold';
-      document.getElementById('voucher-input').value = '';
-      showToast(data.message, 'success');
+    if(data.ok) {closeModal();
+      showToast("✅ تم إرسال طلبك! سنتواصل معك قريباً", "success");
+      document.getElementById("modal-name").value = "";
+      document.getElementById("modal-phone").value = "";
+      document.getElementById("modal-detail").value = "";
+      document.getElementById("modal-payment").value = "";
     } else {
-      msg.textContent = '❌ ' + data.message;
-      msg.className = 'text-xs mt-3 text-red-400 font-bold';
+      throw new Error("failed");
     }
   } catch(e) {
-    msg.textContent = '❌ خطأ في الاتصال';
-    msg.className = 'text-xs mt-3 text-red-400';
+    const waMsg = encodeURIComponent(مرحباً، أريد طلب: ${currentService.service} ($${currentService.price})\nالاسم: ${name}\nالتفاصيل: ${detail}\nالدفع: ${payment});
+    window.open(https://wa.me/${WA}?text=${waMsg}, "_blank");
+    closeModal();
   }
 }
 
-// ===== CHARGE REQUEST =====
-const wallets = {
-  ShamCash: 'acaf0bc3dbb14343c3502bdbb345c90d',
-  Binance: '0x349e41ae6b048c2079a653b900e02ef90a315e09'
-};function openChargeModal() {
-  if (!currentUser) { showToast('سجل دخولك أولاً', 'error'); showModal('login'); return; }
-  document.getElementById('charge-uid').textContent = currentUser.userId;
-  document.getElementById('charge-modal').classList.remove('hidden');
-  document.getElementById('charge-modal').classList.add('flex');
-  document.getElementById('charge-method').addEventListener('change', function() {
-    const w = document.getElementById('charge-wallet');
-    const addr = document.getElementById('charge-wallet-addr');
-    if (this.value && wallets[this.value]) {
-      addr.textContent = wallets[this.value];
-      w.classList.remove('hidden');
-    } else { w.classList.add('hidden'); }
-  });
-}
-function closeChargeModal() {
-  document.getElementById('charge-modal').classList.add('hidden');
-  document.getElementById('charge-modal').classList.remove('flex');
-}
-function copyWallet() {
-  const method = document.getElementById('charge-method').value;
-  if (wallets[method]) { navigator.clipboard.writeText(wallets[method]); showToast('تم نسخ عنوان المحفظة', 'success'); }
-}
-async function sendChargeRequest() {
-  const method = document.getElementById('charge-method').value;
-  const amount = document.getElementById('charge-amount').value;
-  const err = document.getElementById('charge-error');
-  err.classList.add('hidden');
-  if (!method) { err.textContent = 'اختر طريقة الدفع'; err.classList.remove('hidden'); return; }
-  if (!amount || amount < 1) { err.textContent = 'أدخل المبلغ'; err.classList.remove('hidden'); return; }
-  try {
-    const res = await fetch('/api/request-charge', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({userId: currentUser.userId, amount, paymentMethod: method}) });
-    const data = await res.json();
-    if (data.success) {
-      closeChargeModal();
-      showToast('✅ تم إرسال طلب الشحن للإدارة! انتظر التأكيد.', 'success');
-    } else { err.textContent = data.message; err.classList.remove('hidden'); }
-  } catch(e) { err.textContent = 'خطأ في الإرسال'; err.classList.remove('hidden'); }
-}
-
-// ===== BUY =====
-function openBuyModal(serviceName, price, detailType) {
-  if (!currentUser) { showToast('سجل دخولك أولاً للشراء', 'error'); showModal('login'); return; }
-  buyData = { serviceName, price, detailType };
-  document.getElementById('buy-modal-title').textContent = serviceName;
-  document.getElementById('buy-modal-price').textContent = '$' + price;
-  document.getElementById('buy-error').classList.add('hidden');
-
-  const fields = document.getElementById('buy-modal-fields');
-  fields.innerHTML = '';
-
-  const bal = parseFloat(currentUser.balance || 0);
-  if (bal < price) {
-    fields.innerHTML = <div class="bg-red-500/10 border border-red-500/30 rounded-xl p-4 text-center"><p class="text-red-400 font-bold">❌ رصيدك غير كافٍ</p><p class="text-gray-400 text-sm mt-1">رصيدك الحالي: $${bal.toFixed(2)} | المطلوب: $${price}</p><button onclick="closeModal();openChargeModal();" class="mt-3 bg-amber-500 text-slate-950 px-4 py-2 rounded-xl font-bold text-sm">شحن الرصيد</button></div>;
-  } else {
-    const balInfo = <div class="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-3 text-sm text-center"><span class="text-emerald-400">رصيدك: $${bal.toFixed(2)}</span> <span class="text-gray-500 mx-2">|</span> <span class="text-gray-400">بعد الشراء: $${(bal - price).toFixed(2)}</span></div>;
-    if (detailType === 'account') {
-      fields.innerHTML = balInfo + <input id="buy-detail" type="text" placeholder="رابط أو يوزر الحساب..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition">;
-    } else if (detailType === 'telegram') {
-      fields.innerHTML = balInfo + `<input id="buy-detail" type="text" placeholder="يوزر تلغرام (@username)..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition"><div class="bg-blue-500/10 border border-blue-500/20 rounded-xl p-3 text-xs text-blue-300">⏳ سيتم تفعيل تلغرام بريميوم خلال3 ساعات من تأكيد الطلب</div>;
-    } else if (detailType === 'country') {
-      fields.innerHTML = balInfo + <input id="buy-detail" type="text" placeholder="الدولة المطلوبة..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition">;
-    } else if (detailType === 'phone') {
-      fields.innerHTML = balInfo + <input id="buy-detail" type="text" placeholder="رقم الهاتف المستهدف..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition">`;
-    }
-  }
-
-  document.getElementById('buy-modal').classList.remove('hidden');
-  document.getElementById('buy-modal').classList.add('flex');
-}
-function closeBuyModal() {
-  document.getElementById('buy-modal').classList.add('hidden');
-  document.getElementById('buy-modal').classList.remove('flex');
-}
-async function confirmBuy() {
-  const detailEl = document.getElementById('buy-detail');
-  if (!detailEl) return;
-  const details = detailEl.value.trim();
-  const err = document.getElementById('buy-error');
-  err.classList.add('hidden');
-  if (!details) { err.textContent = 'أدخل التفاصيل المطلوبة'; err.classList.remove('hidden'); return; }
-  try {
-    const res = await fetch('/api/buy', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({userId: currentUser.userId, serviceName: buyData.serviceName, price: buyData.price, details}) });
-    const data = await res.json();
-    if (data.success) {
-      currentUser.balance = data.newBalance;
-      localStorage.setItem('amrikiUser', JSON.stringify(currentUser));
-      updateUI();
-      closeBuyModal();
-      showToast(data.message, 'success');
-    } else { err.textContent = data.message; err.classList.remove('hidden'); }
-  } catch(e) { err.textContent = 'خطأ في الاتصال'; err.classList.remove('hidden'); }
-}
-
-// ===== UTILS =====
-function copyText(text, icon) {
+function copyText(text) {
   navigator.clipboard.writeText(text);
-  icon.className = icon.className.replace('fa-copy', 'fa-check');
-  icon.style.color = '#34d399';
-  setTimeout(() => { icon.className = icon.className.replace('fa-check', 'fa-copy'); icon.style.color = ''; }, 2000);
-  showToast('تم النسخ!', 'success');
+  showToast("✅ تم النسخ!", "success");
 }
 
 function showToast(msg, type) {
-  const t = document.getElementById('toast');
+  const t = document.getElementById("toast");
   t.textContent = msg;
-  t.className = 'toast ' + (type === 'success' ? 'bg-emerald-600 text-white' : type === 'error' ? 'bg-red-600 text-white' : 'bg-blue-600 text-white');
-  t.classList.remove('hidden');
-  setTimeout(() => t.classList.add('hidden'), 3500);
+  t.style.background = type==="success" ? "#16a34a" : "#dc2626";
+  t.style.color = "white";
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 3000);
 }
 
-// إغلاق المودال بالضغط خارجه
-document.getElementById('auth-modal').addEventListener('click', function(e) { if(e.target === this) closeModal(); });
-document.getElementById('buy-modal').addEventListener('click', function(e) { if(e.target === this) closeBuyModal(); });
-document.getElementById('charge-modal').addEventListener('click', function(e) { if(e.target === this) closeChargeModal(); });
-
-// تحميل المستخدم من localStorage
-document.addEventListener('DOMContentLoaded', () => {
-  const saved = localStorage.getItem('amrikiUser');
-  if (saved) {
-    currentUser = JSON.parse(saved);
-    updateUI();
-    // تحديث الرصيد من السيرفر
-    fetch('/api/balance?userId=' + currentUser.userId)
-      .then(r => r.json())
-      .then(d => { if(d.success) { currentUser.balance = d.balance; localStorage.setItem('amrikiUser', JSON.stringify(currentUser)); updateUI(); }})
-      .catch(() => {});
-  }
+document.getElementById("order-modal").addEventListener("click", function(e) {
+  if(e.target === this) closeModal();
 });
+
+renderNumbers("all");
 </script>
 </body>
 </html>
